@@ -1,6 +1,4 @@
 from django.db import models
-from django.db.models import CASCADE
-
 
 class Mailing(models.Model):
 
@@ -48,6 +46,9 @@ class Message(models.Model):
         verbose_name = 'Письмо '
         verbose_name_plural = 'Письма'
 
+    def __str__(self):
+        return f'{self.subject_letter}'
+
 ################################################
 
 # class MailingLog(models.Model):
@@ -62,7 +63,7 @@ class Client(models.Model):
     email = models.EmailField(verbose_name='Почта',unique=True)
     first_name = models.CharField(max_length=150, verbose_name='Имя', blank=True, null=True)
     last_name = models.CharField(max_length=150, verbose_name='Фамилия', blank=True, null=True)
-    middle_name = models.CharField(max_length=150, verbose_name='Отчество', blank=True, null=True)
+    father_name = models.CharField(max_length=150, verbose_name='Отчество', blank=True, null=True)
     comment = models.TextField(verbose_name='Комментарий', blank=True, null=True)
 
     class Meta:
@@ -72,15 +73,6 @@ class Client(models.Model):
 
     def __str__(self):
         return f'{self.email}'
-
-
-
-
-
-
-
-
-
 
 
 
