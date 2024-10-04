@@ -1,0 +1,20 @@
+{% extends 'mainapp/base.html' %}
+{% block content %}
+<div class="container py-4">
+    <div class="row">
+        <div class="col-5">
+            <div class="card py-4">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <h1 class="card-title pricing-card-title"></h1>
+                    <img src="" class="img-thumbnail">
+                    <p>Пожалуйста, подтвердите свой выбор или вернитесь назад.</p>
+                    <button type="submit" class="btn btn-primary ">Удалить</button>
+                    <a class="p-2 btn btn-outline-primary" href="{% url 'mainapp:client_list' %}">Вернуться назад</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
