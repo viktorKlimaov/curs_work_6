@@ -1,3 +1,5 @@
+
+from formset.widgets import DateTimeInput
 from django import forms
 
 from mainapp.models import Client, Mailing, Message
@@ -21,6 +23,9 @@ class MailingForm(forms.ModelForm):
     class Meta:
         model = Mailing
         fields = '__all__'
+        widgets = {
+            'data_time': DateTimeInput
+        }
 
 
 class MessageForm(forms.ModelForm):
