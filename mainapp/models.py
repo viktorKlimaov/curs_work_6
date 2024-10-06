@@ -1,7 +1,7 @@
 from django.db import models
 
-class Mailing(models.Model):
 
+class Mailing(models.Model):
     STARTED = 'started'
     CREATED = 'created'
     COMPLETED = 'completed'
@@ -28,8 +28,7 @@ class Mailing(models.Model):
 
     status = models.CharField(verbose_name='Статус рассылки', max_length=9, choices=STATES_CHOICES, default=CREATED)
     client = models.ManyToManyField(to='Client', verbose_name='Клиенты')
-    message = models.ForeignKey(to='Message',on_delete=models.CASCADE, verbose_name='Сообщение')
-
+    message = models.ForeignKey(to='Message', on_delete=models.CASCADE, verbose_name='Сообщение')
 
     class Meta:
         verbose_name = 'Рассылка '
@@ -49,18 +48,20 @@ class Message(models.Model):
     def __str__(self):
         return f'{self.subject_letter}'
 
+
 ################################################
 
-# class MailingLog(models.Model):
-#     data_time = models.DateTimeField(verbose_name='Дата и время первой отправки рассылки', blank=True, null=True)
-#     is_attempt = models.BooleanField(default=True, verbose_name='Признак публикации')
-#     email_answer = models
+class LogMailing(models.Model):
+    data_time = models.DateTimeField(verbose_name='Дата и время первой отправки рассылки', blank=True, null=True)
+    is_attempt = models.BooleanField(default=True, verbose_name='Статус попытки')
+    email_answer = models.TextField(default=False, verbose_name="Ответ почтового сервера")
+    mailing = models.ForeignKey(Mailing, on_delete=models.CASCADE, verbose_name='Рассылка')
 
 ################################################
 
 
 class Client(models.Model):
-    email = models.EmailField(verbose_name='Почта',unique=True)
+    email = models.EmailField(verbose_name='Почта', unique=True)
     first_name = models.CharField(max_length=150, verbose_name='Имя', blank=True, null=True)
     last_name = models.CharField(max_length=150, verbose_name='Фамилия', blank=True, null=True)
     father_name = models.CharField(max_length=150, verbose_name='Отчество', blank=True, null=True)
@@ -70,23 +71,5 @@ class Client(models.Model):
         verbose_name = 'Клиент '
         verbose_name_plural = 'Клиенты'
 
-
     def __str__(self):
         return f'{self.email}'
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
