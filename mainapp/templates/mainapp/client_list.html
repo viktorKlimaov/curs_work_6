@@ -7,7 +7,7 @@
 <div class="container">
     <div class="row text-center mb-4">
         <div class="col-4">
-            <a class="p-2 btn btn-outline-primary" href="{% url 'mainapp:client_form' %}">Добавить Клиента</a>
+            <a class="p-2 btn btn-outline-success" href="{% url 'mainapp:client_form' %}">Добавить Клиента</a>
         </div>
     </div>
 
@@ -19,12 +19,11 @@
                     <h4 class="my-0 font-weight-normal"></h4>
                 </div>
                 <div class="card-body">
-                    <img src="" class="img-thumbnail">
 
                     <p>{{ client.first_name }}</p>
-                    <a class="p-2 btn btn-outline-primary" href="{% url 'mainapp:client_detail' client.pk %}">Детали</a>
-                    <a class="p-2 btn btn-outline-primary" href="{% url 'mainapp:client_update' client.pk %}">Обновить</a>
-                    <a class="p-2 btn btn-outline-primary" href="{% url 'mainapp:client_delete' client.pk %}">Удалить</a>
+                    <a class="p-2 btn btn-outline-dark" href="{% url 'mainapp:client_detail' client.pk %}">Детали</a>
+                    <a class="p-2 btn btn-outline-dark" href="{% url 'mainapp:client_update' client.pk %}">Обновить</a>
+                    <a class="p-2 btn btn-outline-danger" href="{% url 'mainapp:client_delete' client.pk %}">Удалить</a>
                 </div>
             </div>
         </div>

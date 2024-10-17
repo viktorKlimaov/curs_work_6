@@ -15,14 +15,14 @@ class ClientForm(StyleFormMixin, forms.ModelForm):
 
     class Meta:
         model = Client
-        fields = '__all__'
+        fields = ('email', 'first_name', 'last_name', 'father_name', 'comment')
 
 
 class MailingForm(forms.ModelForm):
 
     class Meta:
         model = Mailing
-        fields = '__all__'
+        fields = ('data_time', 'periodicity', 'status', 'client', 'message')
         widgets = {
             'data_time': DateTimeInput
         }
@@ -32,4 +32,4 @@ class MessageForm(forms.ModelForm):
 
     class Meta:
         model = Message
-        fields = '__all__'
+        fields = ('subject_letter', 'body_letter')

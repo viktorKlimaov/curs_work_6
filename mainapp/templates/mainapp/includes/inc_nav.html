@@ -8,17 +8,23 @@
         </div>
 
         <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-            <li><a href="/" class="nav-link px-2 link-secondary">Главная</a></li>
+            <li><a href="/" class="nav-link px-2 link-dark">Главная</a></li>
             <li><a href="{% url 'mainapp:mailing_list' %}" class="nav-link px-2">Рассылки</a></li>
-            <li><a href="{% url 'mainapp:client_list' %}" class="nav-link px-2">Клиенты</a></li>
-            <li><a href="#" class="nav-link px-2">Сообщения</a></li>
-            <li><a href="#" class="nav-link px-2">Блог</a></li>
-            <li><a href="#" class="nav-link px-2"></a></li>
+            <li><a href="{% url 'mainapp:client_list' %}" class="nav-link px-2 link-danger">Клиенты</a></li>
+            <li><a href="#" class="nav-link px-2 link-warning">Блог</a></li>
+            <li><a href="{% url 'mainapp:attempt_list' %}" class="nav-link px-2 link-success">Статистика рассылок</a>
+            </li>
         </ul>
 
         <div class="col-md-3 text-end">
-            <button type="button" class="btn btn-outline-primary me-2">Авторизация</button>
-            <button type="button" class="btn btn-primary">Регистрация</button>
+            {% if user.is_authenticated %}
+            <form method="post" action="{% url 'users:logout' %}">
+                {% csrf_token %}
+                <button class="btn btn-outline-primary" type="submit">Выйти</button>
+            </form>
+            {% endif %}
+            <a class="p-2 btn btn-outline-primary" href="{% url 'users:login' %}">Авторизация</a>
+            <a class="p-2 btn btn-outline-primary" href="{% url 'users:register' %}">Регистрация</a>
         </div>
     </header>
 </div>

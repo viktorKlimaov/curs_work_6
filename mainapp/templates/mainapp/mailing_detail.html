@@ -13,9 +13,12 @@
                     <h4 class="my-0 font-weight-normal"></h4>
                 </div>
                 <div class="card-body">
-                    <img src="" class="img-thumbnail">
-                    <p></p>
-                    <p>Опубликовано </p>
+                    <p>Дата и время первой отправки рассылки {{ object.data_time }}</p>
+                    <p>Периодичность {{ object.periodicity }}</p>
+                    <p>Статус рассылки {{ object.status }}</p>
+                    <p>Клиенты {{ object.client }}</p>
+                    <p>Сообщение {{ object.message }}</p>
+                    <p>Дата и время следующей отправки рассылки {{ object.next_data_time }}</p>
 
                 </div>
             </div>

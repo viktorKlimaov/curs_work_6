@@ -1,9 +1,12 @@
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.core.exceptions import PermissionDenied
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, ListView, DetailView, CreateView, DeleteView, UpdateView
+from formset.calendar import CalendarResponseMixin
 
 from mainapp.forms import ClientForm, MailingForm, MessageForm
-from mainapp.models import Client, Mailing, Message
+from mainapp.models import Client, Mailing, Message, Attempt
 
 
 class BaseView(TemplateView):
@@ -11,63 +14,88 @@ class BaseView(TemplateView):
 
 ##############################################
 
-class ClientListView(ListView):
+class ClientListView(LoginRequiredMixin, ListView):
     model = Client
     context_object_name = 'clients'
     template_name = 'mainapp/client_list.html'
 
-class ClientDetailView(DetailView):
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_superuser:
+            return Client.objects.all()
+        else:
+            return Client.objects.filter(user=user)
+
+
+class ClientDetailView(LoginRequiredMixin, DetailView):
     model = Client
     template_name = 'mainapp/client_detail.html'
 
-class ClientCreateView(CreateView):
+
+class ClientCreateView(LoginRequiredMixin, CreateView):
     model = Client
     form_class = ClientForm
     template_name = 'mainapp/client_form.html'
     success_url = reverse_lazy('mainapp:client_list')
 
-class ClientDeleteView(DeleteView):
+    def form_valid(self, form):
+        product = form.save()
+        product.user = self.request.user
+        product.save()
+        return super().form_valid(form)
+
+
+class ClientDeleteView(LoginRequiredMixin, DeleteView):
     model = Client
     template_name = 'mainapp/client_confirm_delete.html'
     success_url = reverse_lazy('mainapp:client_list')
 
-class ClientUpdateView(UpdateView):
+
+class ClientUpdateView(LoginRequiredMixin, UpdateView):
     model = Client
     form_class = ClientForm
     template_name = 'mainapp/client_form.html'
     success_url = reverse_lazy('mainapp:client_list')
 
+
 #############################################
 
-class MailingListView(ListView):
+class MailingListView(LoginRequiredMixin, ListView):
     model = Mailing
     context_object_name = 'mailing_list'
     template_name = 'mainapp/mailing_list.html'
 
-    def get_context_data(self, **kwargs):
-        # Call the base implementation first to get a context
-        context = super().get_context_data(**kwargs)
-        # Add in a QuerySet of all the books
-        context["messages"] = Message.objects.all()
-        return context
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_superuser:
+            return Mailing.objects.all()
+        else:
+            return Mailing.objects.filter(user=user)
 
 
-class MailingDetailView(DetailView):
+class MailingDetailView(LoginRequiredMixin, DetailView):
     model = Mailing
     template_name = 'mainapp/mailing_detail.html'
 
-class MailingCreateView(CreateView):
+class MailingCreateView(LoginRequiredMixin, CreateView):
     model = Mailing
     form_class = MailingForm
     template_name = 'mainapp/mailing_form.html'
     success_url = reverse_lazy('mainapp:mailing_list')
 
-class MailingDeleteView(DeleteView):
+    def form_valid(self, form):
+        product = form.save()
+        product.user = self.request.user
+        product.save()
+        return super().form_valid(form)
+
+
+class MailingDeleteView(LoginRequiredMixin, DeleteView):
     model = Mailing
     template_name = 'mainapp/mailing_confirm_delete.html'
     success_url = reverse_lazy('mainapp:mailing_list')
 
-class MailingUpdateView(UpdateView):
+class MailingUpdateView(CalendarResponseMixin, UpdateView):
     model = Mailing
     form_class = MailingForm
     template_name = 'mainapp/mailing_form.html'
@@ -75,23 +103,57 @@ class MailingUpdateView(UpdateView):
 
 #############################################
 
-class MessageDetailView(DetailView):
+class MessageListView(LoginRequiredMixin, ListView):
+    model = Message
+    context_object_name = 'messages'
+    template_name = 'mainapp/message_list.html'
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_superuser:
+            return Message.objects.all()
+        else:
+            return Message.objects.filter(user=user)
+
+
+class MessageDetailView(LoginRequiredMixin, DetailView):
     model = Message
     template_name = 'mainapp/message_detail.html'
 
-class MessageCreateView(CreateView):
+class MessageCreateView(LoginRequiredMixin, CreateView):
     model = Message
     form_class = MessageForm
     template_name = 'mainapp/message_form.html'
     success_url = reverse_lazy('mainapp:mailing_list')
 
-class MessageDeleteView(DeleteView):
+    def form_valid(self, form):
+        product = form.save()
+        product.user = self.request.user
+        product.save()
+        return super().form_valid(form)
+
+
+class MessageDeleteView(LoginRequiredMixin, DeleteView):
     model = Message
     template_name = 'mainapp/message_confirm_delete.html'
     success_url = reverse_lazy('mainapp:mailing_list')
 
-class MessageUpdateView(UpdateView):
+class MessageUpdateView(LoginRequiredMixin, UpdateView):
     model = Message
     form_class = MessageForm
     template_name = 'mainapp/message_form.html'
     success_url = reverse_lazy('mainapp:mailing_list')
+
+#################################################
+
+class AttemptListView(LoginRequiredMixin, ListView):
+    model = Attempt
+    context_object_name = 'attempt_list'
+    template_name = 'mainapp/attempt_list.html'
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_superuser:
+            return Attempt.objects.all()
+        else:
+            return Client.objects.filter(user=user)
