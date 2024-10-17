@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 import os
 from pathlib import Path
 
+import django.core.mail.backends.base
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -33,6 +35,8 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
 
     'formset',
+    'django_apscheduler',
+    'phone_field',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -42,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'mainapp',
+    'users'
 ]
 
 MIDDLEWARE = [
@@ -138,3 +143,33 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+EMAIL_HOST = 'smtp.mail.ru'
+EMAIL_PORT = 2525
+EMAIL_HOST_USER = "viktor.klimanov.2017@mail.ru"
+EMAIL_HOST_PASSWORD = "wTgqCujzmTLW1MS6uuuG"
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+
+SERVER_EMAIL = EMAIL_HOST_USER
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+AUTH_USER_MODEL = 'users.User'
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+LOGIN_URL = '/'
+
+# LOGGING = {
+# 'version': 1,
+# 'disable_existing_loggers': False,
+# 'formatters': {'default': {'format': '%(asctime)s %(levelname)s %(name)s: %(message)s'}},
+# 'handlers': {'console': {'class': 'logging.StreamHandler', 'formatter': 'default'}},
+# 'root': {'level': 'DEBUG', 'handlers': ['console']},
+# 'loggers': {'django': {'handlers': ['console'], 'propagate': False}},
+# }
+
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# if DEBUG:
+#     EMAIL_BACKEND  = 'django.core.mail.backends.console.EmailBackend'
