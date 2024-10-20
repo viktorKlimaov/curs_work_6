@@ -9,7 +9,13 @@
                     <div class="card">
                         {% csrf_token %}
                         {{ form.as_p }}
-                        <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+                        <button type="submit" class="btn btn-outline-dark">
+                            {% if object %}
+                            Обновить статус пользователя
+                            {% else %}
+                            Зарегистрироваться
+                            {% endif %}
+                        </button>
                     </div>
                 </div>
 

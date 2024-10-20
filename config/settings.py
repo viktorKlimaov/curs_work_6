@@ -11,8 +11,10 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 import os
 from pathlib import Path
-
+from dotenv import load_dotenv
 import django.core.mail.backends.base
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,10 +24,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-05@u*ivzhbm58*n^uc@e1#&__dw=^y0e*hka2tu@@oyr7o45(('
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG', False) == 'True'
 
 ALLOWED_HOSTS = []
 
@@ -46,7 +48,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'mainapp',
-    'users'
+    'users',
+    'blog'
 ]
 
 MIDDLEWARE = [
@@ -86,11 +89,11 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'curs_work_6',
-        'USER': 'postgres',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
-        'PASSWORD': '12345',
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DB_USER'),
+        'HOST': os.getenv('DB_HOST'),
+        'PORT': os.getenv('DB_PORT'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
 
     }
 }
@@ -145,10 +148,10 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
-EMAIL_HOST = 'smtp.mail.ru'
-EMAIL_PORT = 2525
-EMAIL_HOST_USER = "viktor.klimanov.2017@mail.ru"
-EMAIL_HOST_PASSWORD = "wTgqCujzmTLW1MS6uuuG"
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_PORT = os.getenv('EMAIL_PORT')
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 
@@ -161,15 +164,12 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 LOGIN_URL = '/'
 
-# LOGGING = {
-# 'version': 1,
-# 'disable_existing_loggers': False,
-# 'formatters': {'default': {'format': '%(asctime)s %(levelname)s %(name)s: %(message)s'}},
-# 'handlers': {'console': {'class': 'logging.StreamHandler', 'formatter': 'default'}},
-# 'root': {'level': 'DEBUG', 'handlers': ['console']},
-# 'loggers': {'django': {'handlers': ['console'], 'propagate': False}},
-# }
-
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# if DEBUG:
-#     EMAIL_BACKEND  = 'django.core.mail.backends.console.EmailBackend'
+CACHE_ENABLED=True
+if CACHE_ENABLED:
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.redis.RedisCache",
+            "LOCATION": os.getenv('REDIS_LOCATION'),
+            "TIMEOUT": 100 # Ручная регулировка времени жизни кеша в секундах, по умолчанию 300
+        }
+    }

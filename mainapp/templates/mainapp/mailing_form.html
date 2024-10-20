@@ -10,7 +10,13 @@
                     <div class="card">
                         {% csrf_token %}
                         {{ form.as_p }}
-                        <button type="submit" class="btn btn-primary">Добавить</button>
+                        <button type="submit" class="btn btn-outline-dark">
+                            {% if object %}
+                            Обновить
+                            {% else %}
+                            Создать
+                            {% endif %}
+                        </button>
                     </div>
                 </div>
 
