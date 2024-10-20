@@ -27,6 +27,11 @@ class MailingForm(forms.ModelForm):
             'data_time': DateTimeInput
         }
 
+class MailingModeratorForm(forms.ModelForm):
+    class Meta:
+        model = Mailing
+        fields = ('is_active',)
+
 
 class MessageForm(forms.ModelForm):
 

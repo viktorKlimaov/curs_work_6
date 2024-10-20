@@ -36,18 +36,18 @@ class Mailing(models.Model):
     client = models.ManyToManyField(to='Client', verbose_name='Клиенты')
     message = models.ForeignKey(to='Message', on_delete=models.CASCADE, verbose_name='Сообщение')
     user = models.ForeignKey(User, blank=True, null=True, verbose_name='Пользователь', on_delete=models.CASCADE)
+    is_active = models.BooleanField(default=True)
 
     class Meta:
         verbose_name = 'Рассылка '
         verbose_name_plural = 'Рассылки'
         permissions = [
             ('can_view_mailing', 'Может просматривать любые рассылки'),
-            ('can_view_list_users', 'Может просматривать список пользователей сервиса'),
-            ('can_block_users', 'Может блокировать пользователей сервиса'),
             ('can_disable_mailing', 'Может отключать рассылки'),
-            ('cannot_redact_mailing', 'Не может редактировать рассылки'),
-            ('cannot_manage_list_mailing', 'Не может управлять списком рассылок'),
-            ('cannot_change_mailing_and_message', 'Не может изменять рассылки и сообщения')
+
+            # ('cannot_redact_mailing', 'Не может редактировать рассылки'),
+            # ('cannot_manage_list_mailing', 'Не может управлять списком рассылок'),
+            # ('cannot_change_mailing_and_message', 'Не может изменять рассылки и сообщения')
         ]
 
 
