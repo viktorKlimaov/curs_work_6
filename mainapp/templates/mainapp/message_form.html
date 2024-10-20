@@ -1,0 +1,27 @@
+{% extends 'mainapp/base.html' %}
+{% block content %}
+<div id="center">
+    <div class="container py-4">
+        <form method="post" enctype="multipart/form-data">
+            <div class="row ">
+
+                <div class="col-5">
+                    <div class="card">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+
+                        <button type="submit" class="btn btn-outline-dark">
+                            {% if object %}
+                            Обновить
+                            {% else %}
+                            Создать
+                            {% endif %}
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'mainapp/base.html' %}
+{% block content %}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">Попытки рассылок</h1>
+</div>
+
+<div class="container">
+
+    <div class="row text-center">
+
+        <table class="table caption-top">
+            <caption>Список попыток</caption>
+            <thead>
+
+            <tr>
+                <th scope="col">пк</th>
+                <th scope="col">пк Рассылки</th>
+                <th scope="col">Статус попытки</th>
+                <th scope="col">Ответ почтового сервиса</th>
+                <th scope="col">Дата последней попытки</th>
+
+            </tr>
+            </thead>
+
+            <tbody>
+            {% for attempt in attempt_list %}
+
+            <tr>
+                <th scope="row">{{ attempt.pk }}</th>
+                <td>{{ attempt.mailing }}</td>
+                <td>{{ attempt.is_attempt }}</td>
+                <td>{{ attempt.email_answer }}</td>
+                <td>{{ attempt.data_time }}</td>
+            </tr>
+
+            {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+</div>
+{% endblock %}

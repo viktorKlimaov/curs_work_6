@@ -1,0 +1,28 @@
+{% extends 'mainapp/base.html' %}
+{% block content %}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+           <h1 class="display-4 fw-normal text-body-emphasis">Описание Рассылки</h1>
+    <p class="lead"></p>
+</div>
+
+<div class="container">
+    <div class="row text-center">
+        <div class="col-5">
+            <div class="card mb-4 box-shadow">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal"></h4>
+                </div>
+                <div class="card-body">
+                    <p>Дата и время первой отправки рассылки {{ object.data_time }}</p>
+                    <p>Периодичность {{ object.periodicity }}</p>
+                    <p>Статус рассылки {{ object.status }}</p>
+                    <p>Клиенты {{ object.client }}</p>
+                    <p>Сообщение {{ object.message }}</p>
+                    <p>Дата и время следующей отправки рассылки {{ object.next_data_time }}</p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
