@@ -4,7 +4,8 @@ from django.urls import path
 from django.views.decorators.cache import cache_page
 
 from users.apps import UsersConfig
-from users.views import UserRegisterView, UserLogoutView, UserLoginView, email_verification, NewPasswordView
+from users.views import UserRegisterView, UserLogoutView, UserLoginView, email_verification, NewPasswordView, \
+    UserListView, UserUpdateView
 
 app_name = UsersConfig.name
 
@@ -14,6 +15,9 @@ urlpatterns = [
     path('register/', UserRegisterView.as_view(), name='register'),
     path('email-confirm/<str:token>/', email_verification, name='email-confirm'),
     path('password/', NewPasswordView.as_view(), name='password_reset'),
+
+    path('list/', UserListView.as_view(), name='user_list'),
+    path('update/<int:pk>/', UserUpdateView.as_view(), name='user_update'),
 ]
 
 if settings.DEBUG:

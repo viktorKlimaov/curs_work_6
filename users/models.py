@@ -12,12 +12,19 @@ class User(AbstractUser):
     country = models.CharField(max_length=150, verbose_name='Страна', blank=True, null=True)
     token = models.CharField(max_length=100, verbose_name='token', blank=True, null=True)
 
+
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
     class Meta:
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
+
+        permissions = [
+
+            ('can_view_list_users', 'Может просматривать список пользователей сервиса'),
+            ('can_block_users', 'Может блокировать пользователей сервиса'),
+        ]
 
     def __str__(self):
         return f'{self.email}'
