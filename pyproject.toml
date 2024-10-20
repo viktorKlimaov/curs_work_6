@@ -7,6 +7,14 @@ authors = ["viktor_klimanov <viktor.klimanov.2017@mail.ru>"]
 [tool.poetry.dependencies]
 python = "^3.12"
 Django = "^5.1.1"
+psycopg2-binary = "^2.9.9"
+django-formset = "^1.5.4"
+django-apscheduler = "^0.7.0"
+python-dotenv = "^1.0.1"
+ipython = "^8.28.0"
+django-phone-field = "^1.8.1"
+pillow = "^11.0.0"
+redis = "^5.1.1"
 
 [tool.poetry.dev-dependencies]
 

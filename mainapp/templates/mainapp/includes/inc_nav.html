@@ -1,0 +1,32 @@
+<div class="container">
+    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+        <div class="col-md-3 mb-2 mb-md-0">
+            <a class="d-inline-flex align-items-center mb-2 text-decoration-none" href="/"
+               aria-label="Bootstrap">
+                <span class="fs-5 text-white">Spampers</span>
+            </a>
+        </div>
+
+        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+            <li><a href="/" class="nav-link px-2 link-dark">Главная</a></li>
+            <li><a href="{% url 'mainapp:mailing_list' %}" class="nav-link px-2">Рассылки</a></li>
+            <li><a href="{% url 'mainapp:client_list' %}" class="nav-link px-2 link-danger">Клиенты</a></li>
+
+            <li><a href="{% url 'users:user_list' %}" class="nav-link px-2 link-warning">Список пользователей</a></li>
+            <li><a href="{% url 'mainapp:attempt_list' %}" class="nav-link px-2 link-success">Статистика рассылок</a>
+            </li>
+            <li><a href="{% url 'blog:blog_list' %}" class="nav-link px-2 link-danger">Блог</a></li>
+        </ul>
+
+        <div class="col-md-2 text-end">
+            {% if user.is_authenticated %}
+            <form method="post" action="{% url 'users:logout' %}">
+                {% csrf_token %}
+                <button class="btn btn-outline-primary mb-2" type="submit">Выйти</button>
+            </form>
+            {% endif %}
+            <a class="p-2 btn btn-outline-primary mb-2" href="{% url 'users:login' %}">Авторизация</a>
+            <a class="p-2 btn btn-outline-primary" href="{% url 'users:register' %}">Регистрация</a>
+        </div>
+    </header>
+</div>
