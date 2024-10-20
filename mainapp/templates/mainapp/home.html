@@ -1,0 +1,48 @@
+{% extends 'mainapp/base.html' %}
+{% block content %}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">Spampers</h1>
+</div>
+
+<div class="container">
+    <div class="row text-center">
+
+        <table class="table caption-top">
+            <thead>
+            <tr>
+                <th scope="col">количество рассылок</th>
+                <th scope="col">количество активных рассылок</th>
+                <th scope="col">количество уникальных клиентов для рассылок</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr>
+                <td>{{ count_mailing }}</td>
+                <td>{{ count_active_mailing }}</td>
+                <td>{{ count_unique_client }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="row text-center">
+        {% for blog in random_blogs %}
+        <div class="col-4">
+            <div class="card mb-4 box-shadow">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal"></h4>
+                </div>
+                <div class="card-body">
+
+                    <p>{{ blog.title }}</p>
+                    <a class="p-2 btn btn-outline-dark" href="{% url 'blog:blog_detail' blog.pk %}">Детали</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+
+</div>
+{% endblock %}
