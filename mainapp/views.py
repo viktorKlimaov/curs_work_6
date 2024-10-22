@@ -34,7 +34,6 @@ class ClientListView(LoginRequiredMixin, ListView):
     # Список клиентов могут видеть только их владельцы
     def get_queryset(self):
         user = self.request.user
-        user.save()
         return Client.objects.filter(user=user)
 
 
@@ -80,7 +79,6 @@ class MailingListView(LoginRequiredMixin, ListView):
     # Список рассылок могут видеть только их владельцы и модератор
     def get_queryset(self):
         user = self.request.user
-        user.save()
         if user.has_perm('mainapp.can_view_mailing'):
             return Mailing.objects.all()
         else:
@@ -161,7 +159,6 @@ class MessageListView(LoginRequiredMixin, ListView):
     # Список сообщений могут видеть только их владельцы
     def get_queryset(self):
         user = self.request.user
-        user.save()
         return Message.objects.filter(user=user)
 
 
